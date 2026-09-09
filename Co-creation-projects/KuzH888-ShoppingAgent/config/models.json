@@ -1,0 +1,29 @@
+{
+  "default_model": "gpt-5.6-luna",
+  "models": [
+    {
+      "id": "gpt-5.6-luna",
+      "label": "GPT-5.6 Luna",
+      "provider": "openai",
+      "description_zh": "低成本、高吞吐量，适合日常购物客服。",
+      "description_en": "Cost-sensitive, high-throughput model for everyday shopping support.",
+      "enabled": true
+    },
+    {
+      "id": "gpt-5.6-terra",
+      "label": "GPT-5.6 Terra",
+      "provider": "openai",
+      "description_zh": "在智能水平和成本之间取得平衡。",
+      "description_en": "Balances intelligence and cost.",
+      "enabled": true
+    },
+    {
+      "id": "gpt-5.6-sol",
+      "label": "GPT-5.6 Sol",
+      "provider": "openai",
+      "description_zh": "适合需要更高质量分析的复杂购物需求。",
+      "description_en": "Higher-quality option for complex shopping requirements.",
+      "enabled": true
+    }
+  ]
+}

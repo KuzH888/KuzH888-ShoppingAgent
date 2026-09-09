@@ -1,0 +1,15 @@
+# 核心依赖
+hello-agents>=1.0.0
+python-dotenv>=1.0.0
+pydantic>=2.7.0
+
+# Jupyter Notebook
+jupyter>=1.0.0
+
+# Web 后端
+fastapi>=0.109.0
+uvicorn>=0.27.0
+
+# Automated tests
+pytest>=8.0.0
+httpx>=0.28.0
