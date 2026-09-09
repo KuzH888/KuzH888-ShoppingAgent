@@ -27,6 +27,8 @@ Thumbs.db
 # Temporary runtime files
 *.log
 *.tmp
+.runtime/
+outputs/logs/
 
 # Keep this graduation project's automated tests even though the parent
 # repository ignores test_*.py files globally.

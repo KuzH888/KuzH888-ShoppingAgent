@@ -28,6 +28,7 @@ KuzH888-ShoppingAgent 面向商品数量和品类有限的小型综合商城。�
 - [x] 可视化商品对比：选择 2–3 件商品并并排查看关键差异
 - [x] 商城政策问答：查询配送、退换货、保修和隐私说明
 - [x] 可复现离线评估：19 个案例、五项质量指标和商品目录指纹
+- [x] 一键本地运行：启动、健康检查和安全停止 PowerShell 脚本
 - [x] 安全边界：只引用商品数据库中的价格、库存和产品属性
 
 ## 🛍️ 模拟商城数据
@@ -106,6 +107,9 @@ FastAPI 后端（src/api）
 本地数据与配置（data/products.json、data/store_policies.json、config/models.json、.env）
 ```
 
+`scripts/` 提供原型运行编排，不改变前后端分离关系：它只负责启动两个独立服务、
+执行 HTTP 健康检查并记录本次启动的进程编号。
+
 前端只能通过后端接口取得商品和推荐结果，不直接访问 API Key、LLM 服务或本地
 商品文件。这样可以分别开发、测试和替换前后端。
 
@@ -121,7 +125,7 @@ FastAPI 后端（src/api）
 ### 安装依赖
 
 ```powershell
-pip install -r requirements.txt
+.\.venv\Scripts\python.exe -m pip install -r requirements.txt
 ```
 
 ### 配置 API
@@ -149,10 +153,39 @@ jupyter lab
 
 ### 运行网页应用
 
+#### 推荐：一键启动
+
+在项目根目录打开 PowerShell，运行：
+
+```powershell
+.\scripts\start.ps1
+```
+
+脚本会使用项目自己的 `.venv` 启动 FastAPI 和 Vite、完成健康检查，并打开
+`http://127.0.0.1:5173/`。后台日志保存在 `outputs/logs/`，不会提交到 GitHub。
+
+随时可以单独检查运行状态：
+
+```powershell
+.\scripts\check.ps1
+```
+
+使用结束后安全关闭本次脚本启动的服务：
+
+```powershell
+.\scripts\stop.ps1
+```
+
+如果不希望启动脚本自动打开浏览器，可以运行
+`.\scripts\start.ps1 -NoBrowser`。脚本不会自动安装依赖、填写 API Key，或关闭
+不是由它启动的进程。
+
+#### 手动启动
+
 打开第一个 PowerShell 终端，在项目根目录启动 FastAPI 后端：
 
 ```powershell
-python -m uvicorn src.api.app:app --reload --host 127.0.0.1 --port 8000
+.\.venv\Scripts\python.exe -m uvicorn src.api.app:app --reload --host 127.0.0.1 --port 8000
 ```
 
 启动成功后保持该终端窗口运行，然后访问：
@@ -180,7 +213,7 @@ npm run dev
 ### 运行自动化测试
 
 ```powershell
-python -m pytest -q
+.\.venv\Scripts\python.exe -m pytest -q
 ```
 
 ```powershell
@@ -242,6 +275,7 @@ and noise cancellation is important.
 - [x] 实现商品详情、2–3 件商品可视化对比和商城政策问答
 - [x] 完成中英文推荐测试案例和本地性能评估
 - [x] 建立可重复运行、区分开发基线与最终结果的评估流程
+- [x] 完成一键启动、状态检查、安全停止和浏览器原型验收
 - [ ] 手动替换商品数据与商品配图（参见 [`docs/catalog-editing.md`](docs/catalog-editing.md)）
 - [ ] 完成真实 OpenAI API 联调和最终评估
 

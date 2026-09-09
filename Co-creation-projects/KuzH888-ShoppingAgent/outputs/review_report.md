@@ -12,6 +12,7 @@ The project is ready for catalogue customisation. Its backend, frontend, local s
 - Product details, two-to-three-product comparison and policy lookup work in simulation mode.
 - The model selector is populated from a server-side allow-list; the API key remains server-side.
 - Automated Python and frontend tests are available.
+- One-command PowerShell scripts start, verify and safely stop both local services.
 - The development evaluation records a catalogue SHA-256 fingerprint to prevent stale results from being presented as final.
 
 ## Known boundaries
