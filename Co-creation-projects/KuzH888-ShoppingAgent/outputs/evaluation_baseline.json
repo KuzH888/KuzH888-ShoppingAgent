@@ -1,0 +1,154 @@
+{
+  "label": "development-baseline",
+  "is_final": false,
+  "generated_at": "2026-09-09T11:53:30.289997+00:00",
+  "mode": "offline-simulation",
+  "catalogue_sha256": "e6ed2e4b30b08a5da7b1509a83abbff77cebf349c842f517ff1a7a964ea4b2f8",
+  "catalogue_version": "1.0.0",
+  "product_count": 24,
+  "case_count": 19,
+  "metrics": {
+    "overall_pass_rate_pct": 100.0,
+    "recommendation_expected_result_pct": 100.0,
+    "hard_constraint_satisfaction_pct": 100.0,
+    "catalogue_grounding_pct": 100.0,
+    "language_consistency_pct": 100.0,
+    "average_latency_ms": 1.319,
+    "p95_latency_ms": 18.203
+  },
+  "cases": [
+    {
+      "id": "ZH-REC-001",
+      "kind": "recommendation",
+      "passed": true,
+      "actual": "matched",
+      "latency_ms": 18.203
+    },
+    {
+      "id": "EN-REC-001",
+      "kind": "recommendation",
+      "passed": true,
+      "actual": "matched",
+      "latency_ms": 1.201
+    },
+    {
+      "id": "ZH-REC-002",
+      "kind": "recommendation",
+      "passed": true,
+      "actual": "matched",
+      "latency_ms": 0.744
+    },
+    {
+      "id": "EN-REC-002",
+      "kind": "recommendation",
+      "passed": true,
+      "actual": "matched",
+      "latency_ms": 0.56
+    },
+    {
+      "id": "ZH-REC-003",
+      "kind": "recommendation",
+      "passed": true,
+      "actual": "matched",
+      "latency_ms": 0.365
+    },
+    {
+      "id": "EN-REC-003",
+      "kind": "recommendation",
+      "passed": true,
+      "actual": "matched",
+      "latency_ms": 0.615
+    },
+    {
+      "id": "ZH-REC-004",
+      "kind": "recommendation",
+      "passed": true,
+      "actual": "matched",
+      "latency_ms": 0.413
+    },
+    {
+      "id": "EN-REC-004",
+      "kind": "recommendation",
+      "passed": true,
+      "actual": "matched",
+      "latency_ms": 0.681
+    },
+    {
+      "id": "ZH-REC-005",
+      "kind": "recommendation",
+      "passed": true,
+      "actual": "matched",
+      "latency_ms": 0.503
+    },
+    {
+      "id": "EN-REC-005",
+      "kind": "recommendation",
+      "passed": true,
+      "actual": "matched",
+      "latency_ms": 0.422
+    },
+    {
+      "id": "ZH-REC-006",
+      "kind": "recommendation",
+      "passed": true,
+      "actual": "matched",
+      "latency_ms": 0.343
+    },
+    {
+      "id": "EN-REC-006",
+      "kind": "recommendation",
+      "passed": true,
+      "actual": "matched",
+      "latency_ms": 0.433
+    },
+    {
+      "id": "ZH-NO-MATCH",
+      "kind": "recommendation",
+      "passed": true,
+      "actual": "no_exact_match",
+      "latency_ms": 0.364
+    },
+    {
+      "id": "ZH-DETAIL",
+      "kind": "assistant",
+      "passed": true,
+      "actual": "product_details",
+      "latency_ms": 0.091
+    },
+    {
+      "id": "EN-DETAIL",
+      "kind": "assistant",
+      "passed": true,
+      "actual": "product_details",
+      "latency_ms": 0.035
+    },
+    {
+      "id": "ZH-COMPARE",
+      "kind": "assistant",
+      "passed": true,
+      "actual": "comparison",
+      "latency_ms": 0.027
+    },
+    {
+      "id": "EN-COMPARE",
+      "kind": "assistant",
+      "passed": true,
+      "actual": "comparison",
+      "latency_ms": 0.018
+    },
+    {
+      "id": "ZH-POLICY",
+      "kind": "assistant",
+      "passed": true,
+      "actual": "policy",
+      "latency_ms": 0.023
+    },
+    {
+      "id": "EN-POLICY",
+      "kind": "assistant",
+      "passed": true,
+      "actual": "policy",
+      "latency_ms": 0.017
+    }
+  ]
+}

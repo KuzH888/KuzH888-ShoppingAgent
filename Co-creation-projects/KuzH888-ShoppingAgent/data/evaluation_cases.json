@@ -1,0 +1,21 @@
+[
+  {"id":"ZH-REC-001","kind":"recommendation","query":"我需要100澳元以内、适合通勤的耳机，降噪很重要，而且希望轻便。","expected_language":"zh","expected_status":"matched","expected_top_product":"DIG-001"},
+  {"id":"EN-REC-001","kind":"recommendation","query":"I need lightweight headphones for commuting. My budget is AUD 100 and noise cancellation is important.","expected_language":"en","expected_status":"matched","expected_top_product":"DIG-001"},
+  {"id":"ZH-REC-002","kind":"recommendation","query":"预算80澳元以内，想要适合移动办公的轻便折叠笔记本支架。","expected_language":"zh","expected_status":"matched","expected_top_product":"HOM-004"},
+  {"id":"EN-REC-002","kind":"recommendation","query":"I need an ergonomic keyboard with a wrist rest for long typing, under AUD 110.","expected_language":"en","expected_status":"matched","expected_top_product":"DIG-005"},
+  {"id":"ZH-REC-003","kind":"recommendation","query":"推荐80澳元以内适合学习的护眼台灯。","expected_language":"zh","expected_status":"matched","expected_top_product":"HOM-001"},
+  {"id":"EN-REC-003","kind":"recommendation","query":"I want a portable folding laptop stand for travel under AUD 40.","expected_language":"en","expected_status":"matched","expected_top_product":"HOM-004"},
+  {"id":"ZH-REC-004","kind":"recommendation","query":"旅行用移动电源，预算60澳元以内，希望轻便并支持快速充电。","expected_language":"zh","expected_status":"matched","expected_top_product":"DIG-006"},
+  {"id":"EN-REC-004","kind":"recommendation","query":"I need a compact multi-port fast charger for multiple devices under AUD 60.","expected_language":"en","expected_status":"matched","expected_top_product":"DIG-008"},
+  {"id":"ZH-REC-005","kind":"recommendation","query":"预算90澳元以内，想买一个适合通勤、防泼水、有笔记本隔层的轻量背包。","expected_language":"zh","expected_status":"matched","expected_top_product":"TRV-001"},
+  {"id":"EN-REC-005","kind":"recommendation","query":"I need a travel pillow with neck support for a flight, under AUD 50.","expected_language":"en","expected_status":"matched","expected_top_product":"TRV-003"},
+  {"id":"ZH-REC-006","kind":"recommendation","query":"50澳元以内适合徒步的防漏保温水瓶。","expected_language":"zh","expected_status":"matched","expected_top_product":"TRV-005"},
+  {"id":"EN-REC-006","kind":"recommendation","query":"I want a rechargeable portable fan for summer commuting under AUD 40.","expected_language":"en","expected_status":"matched","expected_top_product":"TRV-006"},
+  {"id":"ZH-NO-MATCH","kind":"recommendation","query":"我必须买50澳元以内带主动降噪的头戴式耳机。","expected_language":"zh","expected_status":"no_exact_match","expected_top_product":null},
+  {"id":"ZH-DETAIL","kind":"assistant","query":"请介绍 DIG-001","expected_language":"zh","expected_reply_type":"product_details","expected_product_ids":["DIG-001"]},
+  {"id":"EN-DETAIL","kind":"assistant","query":"Tell me about DIG-003","expected_language":"en","expected_reply_type":"product_details","expected_product_ids":["DIG-003"]},
+  {"id":"ZH-COMPARE","kind":"assistant","query":"比较 DIG-001 和 DIG-003","expected_language":"zh","expected_reply_type":"comparison","expected_product_ids":["DIG-001","DIG-003"]},
+  {"id":"EN-COMPARE","kind":"assistant","query":"Compare HOM-003 vs HOM-004","expected_language":"en","expected_reply_type":"comparison","expected_product_ids":["HOM-003","HOM-004"]},
+  {"id":"ZH-POLICY","kind":"assistant","query":"请告诉我退换货政策","expected_language":"zh","expected_reply_type":"policy","expected_policy_id":"returns"},
+  {"id":"EN-POLICY","kind":"assistant","query":"What is your shipping policy?","expected_language":"en","expected_reply_type":"policy","expected_policy_id":"shipping"}
+]
