@@ -1,12 +1,15 @@
 <script setup lang="ts">
-import { Backpack, Headphones, House, MessageCircle, Star } from '@lucide/vue'
+import { Backpack, Eye, Headphones, House, MessageCircle, Scale, Star } from '@lucide/vue'
 import { computed } from 'vue'
 
 import { useChatStore } from '@/stores/chat'
+import { useStorefrontStore } from '@/stores/storefront'
 import type { Product } from '@/types/api'
 
 const props = defineProps<{ product: Product }>()
 const chat = useChatStore()
+const storefront = useStorefrontStore()
+const isCompared = computed(() => storefront.compareIds.includes(props.product.id))
 
 const visual = computed(() => {
   if (props.product.category === 'digital_accessories') {
@@ -117,8 +120,20 @@ function askAboutProduct() {
           <small>{{ product.stock > 0 ? `现货 ${product.stock} 件` : '暂时缺货' }}</small>
         </div>
         <button type="button" :aria-label="`咨询 ${product.name.zh}`" @click="askAboutProduct">
-          <MessageCircle :size="18" />
-          问客服
+          <MessageCircle :size="18" />问客服
+        </button>
+      </div>
+      <div class="product-secondary-actions">
+        <button type="button" @click="storefront.openDetails(product)">
+          <Eye :size="16" />查看详情
+        </button>
+        <button
+          type="button"
+          :class="{ selected: isCompared }"
+          :disabled="!isCompared && storefront.compareIds.length >= 3"
+          @click="storefront.toggleCompare(product.id)"
+        >
+          <Scale :size="16" />{{ isCompared ? '取消对比' : '加入对比' }}
         </button>
       </div>
     </div>

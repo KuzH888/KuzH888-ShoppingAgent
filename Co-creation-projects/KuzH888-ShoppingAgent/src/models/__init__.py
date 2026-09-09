@@ -2,6 +2,7 @@
 
 from .conversation import AssistantReply, ConversationState
 from .product import Category, LocalizedText, Product, ProductCatalog
+from .policy import StorePolicies, StorePolicy
 from .recommendation import (
     CustomerNeed,
     NearMatch,
@@ -20,4 +21,6 @@ __all__ = [
     "ProductCatalog",
     "RecommendationResult",
     "ScoredProduct",
+    "StorePolicies",
+    "StorePolicy",
 ]

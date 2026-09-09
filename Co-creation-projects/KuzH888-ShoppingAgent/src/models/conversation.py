@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing import Literal
+from typing import Any, Literal
 
 from pydantic import BaseModel, ConfigDict, Field
 
@@ -28,6 +28,9 @@ class AssistantReply(BaseModel):
         "clarification",
         "recommendation",
         "no_match",
+        "product_details",
+        "comparison",
+        "policy",
         "insufficient_information",
         "error",
     ]
@@ -37,3 +40,4 @@ class AssistantReply(BaseModel):
     questions: list[str] = Field(default_factory=list)
     recommendations: list[ScoredProduct] = Field(default_factory=list)
     alternatives: list[NearMatch] = Field(default_factory=list)
+    facts: dict[str, Any] = Field(default_factory=dict)

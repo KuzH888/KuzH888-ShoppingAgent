@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from hello_agents.tools import Tool, ToolParameter, ToolResponse
 
-from src.services import RecommendationEngine, parse_customer_need
+from src.services import PolicyService, RecommendationEngine, parse_customer_need
 from src.utils.catalog import load_catalog
 
 
@@ -128,4 +128,36 @@ class CompareProductsTool(Tool):
         return ToolResponse.success(
             text="商品比较数据已生成。" if language == "zh" else "Product comparison generated.",
             data={"products": data},
+        )
+
+
+class StorePolicyTool(Tool):
+    """Return one policy from the validated local policy catalogue."""
+
+    def __init__(self, service: PolicyService | None = None):
+        super().__init__(
+            name="get_store_policy",
+            description="查询 KuzMall 的配送、退换货、保修或隐私政策。",
+        )
+        self.service = service or PolicyService()
+
+    def get_parameters(self) -> list[ToolParameter]:
+        return [
+            ToolParameter(
+                name="policy_id",
+                type="string",
+                description="政策 ID：shipping、returns、warranty 或 privacy",
+                required=True,
+            )
+        ]
+
+    def run(self, parameters: dict) -> ToolResponse:
+        policy_id = str(parameters.get("policy_id", "")).strip().lower()
+        try:
+            policy = self.service.get(policy_id)
+        except ValueError as exc:
+            return ToolResponse.error(code="POLICY_NOT_FOUND", message=str(exc))
+        return ToolResponse.success(
+            text=f"Policy found: {policy_id}",
+            data=policy.model_dump(mode="json"),
         )

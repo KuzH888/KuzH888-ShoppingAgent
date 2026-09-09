@@ -9,6 +9,7 @@ const chat = useChatStore()
 const storefront = useStorefrontStore()
 const draft = ref('')
 const messageList = ref<HTMLElement | null>(null)
+const policyPrompts = ['配送政策', '退换货政策', '保修政策', '隐私说明']
 
 async function submit() {
   const text = draft.value
@@ -83,6 +84,11 @@ watch(
       <div v-if="chat.sending" class="message-row assistant">
         <span class="message-avatar"><Sparkles :size="14" /></span>
         <div class="typing-indicator" aria-label="客服正在输入"><i></i><i></i><i></i></div>
+      </div>
+      <div v-if="chat.messages.length === 1" class="quick-prompts" aria-label="常见政策问题">
+        <button v-for="prompt in policyPrompts" :key="prompt" type="button" @click="draft = prompt">
+          {{ prompt }}
+        </button>
       </div>
     </div>
 

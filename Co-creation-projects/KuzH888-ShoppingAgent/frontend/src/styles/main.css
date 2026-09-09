@@ -488,6 +488,39 @@ main {
   background: #f3f7fa;
 }
 
+.product-secondary-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.product-secondary-actions button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 8px;
+  border: 1px solid var(--line);
+  border-radius: 9px;
+  color: var(--muted);
+  background: #fafcfd;
+  font-size: 0.73rem;
+  font-weight: 650;
+  cursor: pointer;
+}
+
+.product-secondary-actions button.selected {
+  border-color: var(--coral);
+  color: var(--coral-dark);
+  background: #fff4f1;
+}
+
+.product-secondary-actions button:disabled {
+  cursor: not-allowed;
+  opacity: 0.45;
+}
+
 .status-panel {
   display: grid;
   min-height: 240px;
@@ -756,6 +789,278 @@ main {
   font-size: 0.65rem;
 }
 
+.quick-prompts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+  margin: 2px 0 12px 34px;
+}
+
+.quick-prompts button {
+  padding: 7px 10px;
+  border: 1px solid #bfd0dc;
+  border-radius: 999px;
+  color: var(--navy-2);
+  background: var(--white);
+  font-size: 0.72rem;
+  cursor: pointer;
+}
+
+.compare-tray {
+  position: fixed;
+  z-index: 45;
+  bottom: 22px;
+  left: 50%;
+  display: flex;
+  width: min(680px, calc(100vw - 36px));
+  min-height: 62px;
+  transform: translateX(-50%);
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 10px 12px 10px 18px;
+  border: 1px solid rgb(255 255 255 / 18%);
+  border-radius: 16px;
+  color: var(--white);
+  background: rgb(16 42 67 / 96%);
+  box-shadow: 0 18px 45px rgb(8 30 49 / 30%);
+  backdrop-filter: blur(12px);
+}
+
+.compare-tray > div:first-child,
+.compare-actions {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+}
+
+.compare-tray p {
+  margin: 0;
+  color: #ffb3a6;
+  font-size: 0.72rem;
+}
+
+.compare-actions button {
+  padding: 9px 14px;
+  border: 0;
+  border-radius: 10px;
+  color: var(--white);
+  background: var(--coral);
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.compare-actions button.clear {
+  display: grid;
+  padding: 9px;
+  place-items: center;
+  color: rgb(255 255 255 / 72%);
+  background: rgb(255 255 255 / 10%);
+}
+
+.compare-actions button:disabled {
+  cursor: not-allowed;
+  opacity: 0.45;
+}
+
+.modal-backdrop {
+  position: fixed;
+  z-index: 80;
+  inset: 0;
+  display: flex;
+  justify-content: flex-end;
+  background: rgb(6 23 38 / 54%);
+  backdrop-filter: blur(3px);
+}
+
+.detail-drawer {
+  width: min(520px, 100vw);
+  height: 100%;
+  padding: 28px;
+  overflow-y: auto;
+  background: var(--white);
+  box-shadow: -20px 0 60px rgb(8 30 49 / 22%);
+}
+
+.detail-drawer header,
+.comparison-modal header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.detail-drawer header small,
+.comparison-modal header small,
+.comparison-grid article > small {
+  color: var(--coral-dark);
+  font-weight: 750;
+  letter-spacing: 0.08em;
+}
+
+.detail-drawer h2,
+.comparison-modal h2 {
+  margin: 5px 0 0;
+  color: var(--navy);
+  font-size: 2rem;
+}
+
+.detail-drawer header button,
+.comparison-modal header button {
+  display: grid;
+  width: 38px;
+  height: 38px;
+  flex: 0 0 38px;
+  place-items: center;
+  border: 1px solid var(--line);
+  border-radius: 11px;
+  color: var(--muted);
+  background: var(--white);
+  cursor: pointer;
+}
+
+.detail-description,
+.detail-drawer section p {
+  color: var(--muted);
+  line-height: 1.7;
+}
+
+.detail-stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 22px 0;
+}
+
+.detail-stats > * {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 9px 11px;
+  border-radius: 9px;
+  color: var(--navy);
+  background: #f0f5f8;
+  font-size: 0.82rem;
+}
+
+.detail-drawer section {
+  margin-top: 26px;
+}
+
+.detail-drawer h3 {
+  color: var(--navy);
+  font-size: 1rem;
+}
+
+.detail-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+}
+
+.detail-chips span {
+  padding: 7px 9px;
+  border-radius: 8px;
+  color: #476174;
+  background: #eef4f7;
+  font-size: 0.76rem;
+}
+
+.detail-drawer dl,
+.comparison-grid dl {
+  display: grid;
+  grid-template-columns: minmax(110px, 0.45fr) 1fr;
+  margin: 0;
+  border-top: 1px solid var(--line);
+}
+
+.detail-drawer dt,
+.detail-drawer dd,
+.comparison-grid dt,
+.comparison-grid dd {
+  margin: 0;
+  padding: 10px 4px;
+  border-bottom: 1px solid var(--line);
+  color: var(--muted);
+  font-size: 0.8rem;
+}
+
+.detail-drawer dt,
+.comparison-grid dt {
+  color: var(--navy);
+  font-weight: 700;
+}
+
+.primary-action {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 28px;
+  padding: 12px;
+  border: 0;
+  border-radius: 11px;
+  color: var(--white);
+  background: var(--coral);
+  font-weight: 750;
+  cursor: pointer;
+}
+
+.comparison-backdrop {
+  align-items: center;
+  justify-content: center;
+  padding: 22px;
+}
+
+.comparison-modal {
+  width: min(1000px, 100%);
+  max-height: calc(100vh - 44px);
+  padding: 28px;
+  overflow-y: auto;
+  border-radius: 22px;
+  background: var(--white);
+  box-shadow: var(--shadow);
+}
+
+.comparison-grid {
+  --columns: 2;
+  display: grid;
+  grid-template-columns: repeat(var(--columns), minmax(0, 1fr));
+  gap: 14px;
+  margin-top: 24px;
+}
+
+.comparison-grid article {
+  min-width: 0;
+  padding: 18px;
+  border: 1px solid var(--line);
+  border-radius: 15px;
+  background: #fafcfd;
+}
+
+.comparison-grid h3 {
+  min-height: 48px;
+  margin: 8px 0;
+  color: var(--navy);
+}
+
+.comparison-grid strong {
+  display: block;
+  margin-bottom: 16px;
+  color: var(--coral-dark);
+}
+
+.comparison-grid dl {
+  grid-template-columns: 80px 1fr;
+}
+
+.comparison-ask {
+  width: auto;
+  margin-left: auto;
+  padding-inline: 20px;
+}
+
 footer {
   display: flex;
   align-items: center;
@@ -889,6 +1194,25 @@ footer {
   .chat-launcher {
     right: 16px;
     bottom: 16px;
+  }
+
+  .compare-tray {
+    bottom: 10px;
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .compare-actions button:not(.clear) {
+    flex: 1;
+  }
+
+  .detail-drawer,
+  .comparison-modal {
+    padding: 20px;
+  }
+
+  .comparison-grid {
+    grid-template-columns: 1fr;
   }
 
   footer {

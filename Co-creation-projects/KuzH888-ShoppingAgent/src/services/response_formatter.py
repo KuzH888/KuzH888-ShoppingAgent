@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from src.models import CustomerNeed, NearMatch, ScoredProduct
+from src.models import CustomerNeed, NearMatch, Product, ScoredProduct, StorePolicy
 
 
 LABELS = {
@@ -140,3 +140,73 @@ def format_near_matches(need: CustomerNeed, alternatives: list[NearMatch]) -> st
             f"{index}. {item.name} ({item.product_id}), {item.currency} {item.price:.2f}; does not meet: {reasons}."
         )
     return "\n".join(lines)
+
+
+def format_product_details(product: Product, language: str) -> str:
+    """Render one catalogue product without adding unsupported claims."""
+    name = product.name.zh if language == "zh" else product.name.en
+    description = product.description.zh if language == "zh" else product.description.en
+    features = [_label(value, language) for value in product.features]
+    use_cases = [_label(value, language) for value in product.use_cases]
+    specs = ", ".join(f"{key}: {value}" for key, value in product.specifications.items())
+    if language == "zh":
+        stock = f"现货 {product.stock} 件" if product.stock else "暂时缺货"
+        return "\n".join(
+            [
+                f"{name}（{product.id}）",
+                description,
+                f"价格：{product.currency} {product.price:.2f}；库存：{stock}",
+                f"评分：{product.rating:.1f}/5（{product.review_count} 条评价）",
+                f"主要功能：{'、'.join(features)}",
+                f"适用场景：{'、'.join(use_cases)}",
+                f"规格：{specs}",
+                f"模拟保修期：{product.warranty_months} 个月。",
+            ]
+        )
+    stock = f"{product.stock} in stock" if product.stock else "out of stock"
+    return "\n".join(
+        [
+            f"{name} ({product.id})",
+            description,
+            f"Price: {product.currency} {product.price:.2f}; stock: {stock}",
+            f"Rating: {product.rating:.1f}/5 ({product.review_count} reviews)",
+            f"Key features: {', '.join(features)}",
+            f"Use cases: {', '.join(use_cases)}",
+            f"Specifications: {specs}",
+            f"Simulated warranty: {product.warranty_months} months.",
+        ]
+    )
+
+
+def format_comparison(products: list[dict], language: str) -> str:
+    """Render a concise factual comparison for chat."""
+    if language == "zh":
+        lines = ["商品对比："]
+        for product in products:
+            features = "、".join(_label(value, "zh") for value in product["features"][:4])
+            lines.append(
+                f"- {product['name']}（{product['product_id']}）："
+                f"{product['currency']} {product['price']:.2f}，评分 {product['rating']:.1f}/5，"
+                f"库存 {product['stock']}，保修 {product['warranty_months']} 个月；主要功能：{features}。"
+            )
+        lines.append("你可以结合预算、主要功能和保修期选择；以上数据均来自本地商品目录。")
+        return "\n".join(lines)
+    lines = ["Product comparison:"]
+    for product in products:
+        features = ", ".join(_label(value, "en") for value in product["features"][:4])
+        lines.append(
+            f"- {product['name']} ({product['product_id']}): "
+            f"{product['currency']} {product['price']:.2f}, rating {product['rating']:.1f}/5, "
+            f"stock {product['stock']}, {product['warranty_months']}-month warranty; "
+            f"key features: {features}."
+        )
+    lines.append("Choose based on budget, key features and warranty. All facts come from the local catalogue.")
+    return "\n".join(lines)
+
+
+def format_policy(policy: StorePolicy, language: str) -> str:
+    """Render one bilingual store policy."""
+    title = policy.title.zh if language == "zh" else policy.title.en
+    summary = policy.summary.zh if language == "zh" else policy.summary.en
+    details = [item.zh if language == "zh" else item.en for item in policy.details]
+    return "\n".join([title, summary, *(f"- {detail}" for detail in details)])

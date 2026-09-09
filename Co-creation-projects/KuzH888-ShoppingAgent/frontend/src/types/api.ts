@@ -55,12 +55,21 @@ export interface NearMatch {
 }
 
 export interface AssistantResult {
-  type: 'clarification' | 'recommendation' | 'no_match' | 'insufficient_information' | 'error'
+  type:
+    | 'clarification'
+    | 'recommendation'
+    | 'no_match'
+    | 'product_details'
+    | 'comparison'
+    | 'policy'
+    | 'insufficient_information'
+    | 'error'
   language: Language
   message: string
   questions: string[]
   recommendations: ScoredProduct[]
   alternatives: NearMatch[]
+  facts: Record<string, unknown>
 }
 
 export interface ChatResponse {
@@ -79,4 +88,24 @@ export interface ProductsResponse {
 export interface ModelsResponse {
   default_model: string
   models: PublicModel[]
+}
+
+export interface ComparisonProduct {
+  product_id: string
+  name: string
+  price: number
+  currency: 'AUD'
+  stock: number
+  rating: number
+  features: string[]
+  use_cases: string[]
+  warranty_months: number
+  specifications: Record<string, unknown>
+}
+
+export interface StorePolicy {
+  id: 'shipping' | 'returns' | 'warranty' | 'privacy'
+  title: LocalizedText
+  summary: LocalizedText
+  details: LocalizedText[]
 }

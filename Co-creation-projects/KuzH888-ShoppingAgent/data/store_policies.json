@@ -1,0 +1,45 @@
+{
+  "version": "1.0.0",
+  "store_name": "KuzMall",
+  "policies": [
+    {
+      "id": "shipping",
+      "title": {"zh": "配送政策", "en": "Shipping policy"},
+      "summary": {"zh": "澳大利亚境内订单满 80 澳元免标准配送费。", "en": "Standard shipping is free for Australian orders of AUD 80 or more."},
+      "details": [
+        {"zh": "标准配送预计 3–7 个工作日。", "en": "Standard delivery is estimated at 3–7 business days."},
+        {"zh": "未满 80 澳元的订单收取 8.90 澳元标准配送费。", "en": "Orders under AUD 80 have an AUD 8.90 standard shipping fee."},
+        {"zh": "本毕业设计商城不处理真实订单或配送。", "en": "This graduation-project store does not process real orders or deliveries."}
+      ]
+    },
+    {
+      "id": "returns",
+      "title": {"zh": "退换货政策", "en": "Returns policy"},
+      "summary": {"zh": "未使用且包装完整的模拟商品可在 30 天内申请退换。", "en": "Unused simulated products in original packaging may be returned within 30 days."},
+      "details": [
+        {"zh": "需要提供模拟订单编号和购买日期。", "en": "A simulated order number and purchase date are required."},
+        {"zh": "因改变主意产生的退货运费由顾客承担。", "en": "Customers cover return shipping for change-of-mind returns."},
+        {"zh": "故障商品按澳大利亚消费者保障原则处理。", "en": "Faulty products are handled in line with Australian consumer guarantees."}
+      ]
+    },
+    {
+      "id": "warranty",
+      "title": {"zh": "保修政策", "en": "Warranty policy"},
+      "summary": {"zh": "每件商品的模拟保修期以商品详情中的月数为准。", "en": "Each product's simulated warranty period is shown in its product details."},
+      "details": [
+        {"zh": "保修覆盖正常使用下的制造缺陷。", "en": "Warranty covers manufacturing defects under normal use."},
+        {"zh": "意外损坏、误用和正常磨损不属于额外保修范围。", "en": "Accidental damage, misuse and normal wear are not covered by the additional warranty."},
+        {"zh": "本政策不限制适用的法定消费者权利。", "en": "This policy does not limit applicable statutory consumer rights."}
+      ]
+    },
+    {
+      "id": "privacy",
+      "title": {"zh": "隐私说明", "en": "Privacy notice"},
+      "summary": {"zh": "当前演示仅在内存和浏览器会话中保存必要的聊天状态。", "en": "The current demo keeps only necessary chat state in memory and the browser session."},
+      "details": [
+        {"zh": "请勿在聊天中输入密码、支付资料或其他敏感信息。", "en": "Do not enter passwords, payment details or other sensitive information in chat."},
+        {"zh": "点击新对话会清除当前后端内存会话。", "en": "Starting a new conversation clears the current backend in-memory session."}
+      ]
+    }
+  ]
+}

@@ -24,6 +24,9 @@ KuzH888-ShoppingAgent 面向商品数量和品类有限的小型综合商城。�
 - [x] 对话编排：最多提出两个澄清问题，并在当前会话中合并用户补充信息
 - [x] 结构化双语回复：输出首选、最多两个备选、理由和主要取舍
 - [x] 网页客服窗口：在模拟商城页面中提供浮动聊天弹窗
+- [x] 商品详情抽屉：展示完整规格、库存、评分和模拟保修期
+- [x] 可视化商品对比：选择 2–3 件商品并并排查看关键差异
+- [x] 商城政策问答：查询配送、退换货、保修和隐私说明
 - [x] 安全边界：只引用商品数据库中的价格、库存和产品属性
 
 ## 🛍️ 模拟商城数据
@@ -64,7 +67,7 @@ python -m src.utils.catalog
 信息后，它调用确定性的推荐引擎，再生成与用户语言一致的结构化回复。
 
 `create_live_agent()` 用于最终联网测试。它根据用户从白名单选择的模型创建一个
-HelloAgents `SimpleAgent`，并注册商品搜索、详情查询和商品比较三个工具。模拟模式
+HelloAgents `SimpleAgent`，并注册商品搜索、详情查询、商品比较和政策查询四个工具。模拟模式
 下会阻止在线智能体启动，因此现在不需要填写 API Key。
 
 ## 🏗️ 整体架构
@@ -74,14 +77,14 @@ HelloAgents `SimpleAgent`，并注册商品搜索、详情查询和商品比较�
 
 ```text
 浏览器商城前端（Vue 3 / TypeScript / Vite / Pinia）
-  ├─ 商品分类、卡片与模型选择
+  ├─ 商品分类、卡片、详情抽屉、商品对比与模型选择
   ├─ 浮动客服窗口与当前浏览器会话
   └─ 类型化 API 客户端（frontend/src/api）
                     │
                     │ HTTP + JSON
                     ▼
 FastAPI 后端（src/api）
-  ├─ 模型列表、商品列表、聊天和会话接口
+  ├─ 模型、商品详情/对比、政策、聊天和会话接口
   ├─ ShoppingAssistant 本地客服编排器
   └─ HelloAgents SimpleAgent 在线模式
                     │
@@ -89,7 +92,8 @@ FastAPI 后端（src/api）
 商品工具层（src/tools）
   ├─ 商品搜索
   ├─ 商品详情
-  └─ 商品比较
+  ├─ 商品比较
+  └─ 商城政策查询
                     │
                     ▼
 业务服务层（src/services）
@@ -98,7 +102,7 @@ FastAPI 后端（src/api）
   └─ 双语回复格式化
                     │
                     ▼
-本地数据与配置（data/products.json、config/models.json、.env）
+本地数据与配置（data/products.json、data/store_policies.json、config/models.json、.env）
 ```
 
 前端只能通过后端接口取得商品和推荐结果，不直接访问 API Key、LLM 服务或本地
@@ -156,6 +160,7 @@ python -m uvicorn src.api.app:app --reload --host 127.0.0.1 --port 8000
 - 健康检查：`http://127.0.0.1:8000/health`
 - 可选模型：`http://127.0.0.1:8000/api/models`
 - 商品列表：`http://127.0.0.1:8000/api/products`
+- 商城政策：`http://127.0.0.1:8000/api/policies`
 
 当前后端处于模拟模式，因此聊天接口可以运行，但不会调用或产生任何 LLM API
 费用。
@@ -184,7 +189,7 @@ npm run build
 ```
 
 当前测试覆盖商品数据验证、中英文需求解析、硬性条件过滤、稳定排序、
-无精确匹配回退、商品详情与比较工具。
+无精确匹配回退、商品详情、比较和政策查询工具，以及前端聊天与对比状态。
 
 ## 📖 使用示例
 
@@ -217,6 +222,7 @@ and noise cancellation is important.
 - [x] 完成 HelloAgents 推荐智能体及本地模拟编排器
 - [x] 实现 FastAPI 后端接口
 - [x] 实现 Vue 3 商城网页和客服聊天窗口
+- [x] 实现商品详情、2–3 件商品可视化对比和商城政策问答
 - [x] 完成中英文推荐测试案例和本地性能评估
 
 ## 🤝 贡献指南

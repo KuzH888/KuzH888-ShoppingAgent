@@ -6,7 +6,7 @@ from typing import Literal
 
 from pydantic import BaseModel, ConfigDict, Field
 
-from src.models import AssistantReply, Product
+from src.models import AssistantReply, Product, StorePolicy
 
 
 class HealthResponse(BaseModel):
@@ -31,6 +31,25 @@ class ProductListResponse(BaseModel):
 
     total: int = Field(ge=0)
     products: list[Product]
+
+
+class ProductComparisonRequest(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+
+    product_ids: list[str] = Field(min_length=2, max_length=3)
+    language: Literal["zh", "en"] = "zh"
+
+
+class ProductComparisonResponse(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+
+    products: list[dict]
+
+
+class PolicyListResponse(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+
+    policies: list[StorePolicy]
 
 
 class ChatRequest(BaseModel):

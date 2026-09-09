@@ -6,7 +6,8 @@ from fastapi import FastAPI, HTTPException, Query
 from fastapi.middleware.cors import CORSMiddleware
 
 from src.agents import ShoppingAssistant, create_live_agent
-from src.models import Category
+from src.models import Category, Product, StorePolicy
+from src.services import PolicyService, RecommendationEngine
 from src.utils.catalog import load_catalog
 from src.utils.config import ConfigurationError, list_public_models, load_runtime_config
 
@@ -15,6 +16,9 @@ from .schemas import (
     ChatResponse,
     HealthResponse,
     ModelsResponse,
+    PolicyListResponse,
+    ProductComparisonRequest,
+    ProductComparisonResponse,
     ProductListResponse,
     SessionResetResponse,
 )
@@ -44,6 +48,8 @@ app.add_middleware(
 )
 
 catalog = load_catalog()
+recommendation_engine = RecommendationEngine(catalog)
+policy_service = PolicyService()
 simulation_assistant = ShoppingAssistant()
 live_agents: dict[tuple[str, str], object] = {}
 
@@ -77,6 +83,45 @@ def get_products(
     if category is not None:
         products = [product for product in products if product.category == category]
     return ProductListResponse(total=len(products), products=products)
+
+
+@app.post(
+    "/api/products/compare",
+    response_model=ProductComparisonResponse,
+    tags=["catalogue"],
+)
+def compare_products(request: ProductComparisonRequest) -> ProductComparisonResponse:
+    """Return a factual side-by-side comparison for two or three products."""
+    product_ids = [product_id.strip().upper() for product_id in request.product_ids]
+    try:
+        products = recommendation_engine.compare(product_ids, language=request.language)
+    except ValueError as exc:
+        raise HTTPException(status_code=400, detail=str(exc)) from exc
+    return ProductComparisonResponse(products=products)
+
+
+@app.get("/api/products/{product_id}", response_model=Product, tags=["catalogue"])
+def get_product(product_id: str) -> Product:
+    """Return the complete validated record for one product ID."""
+    try:
+        return recommendation_engine.get_product(product_id.strip().upper())
+    except ValueError as exc:
+        raise HTTPException(status_code=404, detail=str(exc)) from exc
+
+
+@app.get("/api/policies", response_model=PolicyListResponse, tags=["policies"])
+def get_policies() -> PolicyListResponse:
+    """Return all fictional bilingual store policies."""
+    return PolicyListResponse(policies=policy_service.policies.policies)
+
+
+@app.get("/api/policies/{policy_id}", response_model=StorePolicy, tags=["policies"])
+def get_policy(policy_id: str) -> StorePolicy:
+    """Return one fictional store policy."""
+    try:
+        return policy_service.get(policy_id)
+    except ValueError as exc:
+        raise HTTPException(status_code=404, detail=str(exc)) from exc
 
 
 @app.post("/api/chat", response_model=ChatResponse, tags=["assistant"])

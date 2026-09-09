@@ -4,6 +4,9 @@ import { onMounted, onUnmounted } from 'vue'
 
 import AppHeader from '@/components/AppHeader.vue'
 import ChatWidget from '@/components/ChatWidget.vue'
+import CompareTray from '@/components/CompareTray.vue'
+import ComparisonModal from '@/components/ComparisonModal.vue'
+import ProductDetailDrawer from '@/components/ProductDetailDrawer.vue'
 import ProductCard from '@/components/ProductCard.vue'
 import { useChatStore } from '@/stores/chat'
 import { useStorefrontStore, type CategoryFilter } from '@/stores/storefront'
@@ -104,5 +107,8 @@ onUnmounted(() => unregisterTools())
     </footer>
 
     <ChatWidget />
+    <CompareTray />
+    <ProductDetailDrawer />
+    <ComparisonModal />
   </div>
 </template>

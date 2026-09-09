@@ -91,6 +91,29 @@ def test_consecutive_duplicate_message_is_not_stored_twice():
     assert state.user_messages == [message]
 
 
+def test_product_detail_intent_uses_catalogue_facts_without_session_pollution():
+    assistant = ShoppingAssistant()
+    reply = assistant.chat("请介绍 DIG-001", session_id="details")
+
+    assert reply.type == "product_details"
+    assert reply.facts["product"]["id"] == "DIG-001"
+    assert "AUD 89.90" in reply.message
+    assert assistant.get_state("details").user_messages == []
+
+
+def test_comparison_and_policy_intents_are_supported_in_simulation_mode():
+    assistant = ShoppingAssistant()
+    comparison = assistant.chat("比较 DIG-001 和 DIG-003", session_id="direct")
+    policy = assistant.chat("请告诉我退货政策", session_id="direct")
+
+    assert comparison.type == "comparison"
+    assert len(comparison.facts["products"]) == 2
+    assert "DIG-003" in comparison.message
+    assert policy.type == "policy"
+    assert policy.facts["policy"]["id"] == "returns"
+    assert "30 天" in policy.message
+
+
 def test_live_agent_stays_disabled_in_simulation_mode():
     with pytest.raises(ConfigurationError, match="APP_SIMULATION_MODE=true"):
         create_live_agent()

@@ -42,6 +42,32 @@ def test_products_can_be_listed_and_filtered():
     )
 
 
+def test_product_details_and_comparison_endpoints():
+    details = client.get("/api/products/dig-001")
+    comparison = client.post(
+        "/api/products/compare",
+        json={"product_ids": ["DIG-001", "DIG-003"], "language": "zh"},
+    )
+
+    assert details.status_code == 200
+    assert details.json()["id"] == "DIG-001"
+    assert comparison.status_code == 200
+    assert [item["product_id"] for item in comparison.json()["products"]] == [
+        "DIG-001",
+        "DIG-003",
+    ]
+
+
+def test_policy_endpoints_return_validated_bilingual_content():
+    policies = client.get("/api/policies")
+    returns = client.get("/api/policies/returns")
+
+    assert policies.status_code == 200
+    assert len(policies.json()["policies"]) == 4
+    assert returns.status_code == 200
+    assert returns.json()["title"]["zh"] == "退换货政策"
+
+
 def test_chat_preserves_session_context_in_simulation_mode():
     session_id = "api-follow-up"
     first = client.post(
