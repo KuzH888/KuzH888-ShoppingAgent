@@ -2,6 +2,25 @@
 
 > 基于 HelloAgents 的多语言智能购物客服，根据用户的核心需求推荐合适的商品。
 
+[GitHub 项目主页](https://github.com/KuzH888/KuzH888-ShoppingAgent/tree/feature/ShoppingAgent/Co-creation-projects/KuzH888-ShoppingAgent)
+
+## 📌 当前状态
+
+项目已完成可本地运行的全栈原型，目前默认使用不消耗 API 额度的离线模拟模式。
+商品浏览、商品详情、2–3 件商品比较、商城政策查询和中英文推荐对话已经贯通。
+
+| 项目 | 当前结果 |
+|---|---|
+| 后端版本 | FastAPI API `0.5.0` |
+| 商品目录 | 24 件虚构商品、3 个品类 |
+| 离线评估 | 19/19 案例通过 |
+| 自动化测试 | Python 27 项、前端 4 项通过 |
+| 前端构建 | TypeScript 类型检查与 Vite 生产构建通过 |
+| 浏览器验收 | 详情、比较、推荐、政策和模型切换均通过，控制台无报错 |
+| 在线 LLM | 尚未进行真实 API 联调 |
+
+> 上述结果是商品修改前的开发基线，不代表真实 LLM 的最终评估结果。
+
 ## 📝 项目简介
 
 KuzH888-ShoppingAgent 面向商品数量和品类有限的小型综合商城。用户可以通过网页右下角的客服聊天窗口描述预算、使用场景、核心功能和个人偏好，智能客服会澄清需求、检索候选商品，并给出有依据的推荐和对比说明。
@@ -13,7 +32,7 @@ KuzH888-ShoppingAgent 面向商品数量和品类有限的小型综合商城。�
 - 根据预算、用途和偏好推荐商品
 - 比较多件候选商品并解释差异
 - 回答商品规格、库存和商城政策问题
-- 使用中文、英文或其他受支持语言与用户交流
+- 使用中文或英文描述需求并获得同语言回复
 
 ## ✨ 核心功能
 
@@ -113,6 +132,36 @@ FastAPI 后端（src/api）
 前端只能通过后端接口取得商品和推荐结果，不直接访问 API Key、LLM 服务或本地
 商品文件。这样可以分别开发、测试和替换前后端。
 
+### 项目目录
+
+```text
+KuzH888-ShoppingAgent/
+├─ config/                 # 可选模型白名单
+├─ data/                   # 商品、政策、测试和评估数据
+├─ docs/                   # 商品编辑与评估说明
+├─ frontend/               # Vue 3 + TypeScript 商城前端
+│  ├─ public/              # 前端静态资源
+│  └─ src/
+│     ├─ api/              # 类型化 HTTP 客户端
+│     ├─ components/       # 商城与客服界面组件
+│     ├─ stores/           # Pinia 状态管理及测试
+│     └─ types/            # API TypeScript 类型
+├─ outputs/                # 基线评估和原型验收报告
+├─ scripts/                # 启动、检查和停止脚本
+├─ src/
+│  ├─ agents/              # 本地编排器与 HelloAgents 在线智能体
+│  ├─ api/                 # FastAPI 接口和请求/响应模型
+│  ├─ evaluation/          # 可复现评估程序
+│  ├─ models/              # 商品、推荐、对话和政策模型
+│  ├─ services/            # 需求解析、推荐和回复格式化
+│  ├─ tools/               # HelloAgents 商品与政策工具
+│  └─ utils/               # 配置、目录和数据加载工具
+├─ tests/                  # Python 自动化测试
+├─ main.ipynb              # 毕业设计演示 Notebook
+├─ requirements.txt        # Python 依赖
+└─ README.md
+```
+
 ## 🚀 快速开始
 
 ### 环境要求
@@ -124,8 +173,13 @@ FastAPI 后端（src/api）
 
 ### 安装依赖
 
+在项目根目录执行：
+
 ```powershell
 .\.venv\Scripts\python.exe -m pip install -r requirements.txt
+Set-Location frontend
+npm install
+Set-Location ..
 ```
 
 ### 配置 API
@@ -141,12 +195,14 @@ LLM_API_KEY=
 APP_SIMULATION_MODE=true
 ```
 
-当前可选模型由 `config/models.json` 管理，默认使用 `gpt-5.6-luna`。
+当前可选模型由 `config/models.json` 管理，默认使用 `gpt-5.6-luna`。这些模型 ID
+是项目开发阶段的可配置预设；最终联调时必须改成所选服务商真实可用的模型 ID，
+并重新运行在线测试。
 
 ### 运行 Notebook
 
 ```powershell
-jupyter lab
+.\.venv\Scripts\python.exe -m jupyter lab
 ```
 
 打开 `main.ipynb`，从上到下依次运行单元格。
@@ -225,6 +281,21 @@ npm run build
 当前测试覆盖商品数据验证、中英文需求解析、硬性条件过滤、稳定排序、
 无精确匹配回退、商品详情、比较和政策查询工具，以及前端聊天与对比状态。
 
+### 主要 API
+
+| 方法 | 路径 | 用途 |
+|---|---|---|
+| `GET` | `/health` | 查看后端、运行模式和 API Key 配置状态（不返回密钥） |
+| `GET` | `/api/models` | 获取前端可选模型 |
+| `GET` | `/api/products` | 获取全部商品，支持按品类筛选 |
+| `GET` | `/api/products/{product_id}` | 获取单件商品详情 |
+| `POST` | `/api/products/compare` | 比较 2–3 件商品 |
+| `GET` | `/api/policies` | 获取商城政策 |
+| `POST` | `/api/chat` | 发送客服消息 |
+| `DELETE` | `/api/sessions/{session_id}` | 清除指定会话状态 |
+
+完整交互式接口文档可在后端启动后访问 `http://127.0.0.1:8000/docs`。
+
 ### 运行开发基线评估
 
 ```powershell
@@ -241,7 +312,19 @@ npm run build
 用户：I need lightweight headphones for commuting. My budget is AUD 100,
 and noise cancellation is important.
 
-客服：
+客服：Top pick: AirLite Commuter ANC Headphones (DIG-001)
+Price: AUD 89.90; match score: 93.38/100
+Why: It matches commuting, active noise cancellation and lightweight use.
+Main trade-off: No clear preference trade-off was detected.
+```
+
+中文也可以直接提问，例如：
+
+```text
+用户：我需要 100 澳元以内、适合通勤、轻便且降噪的耳机。
+客服：首选：AirLite 通勤降噪耳机（DIG-001）
+价格：AUD 89.90；匹配分：93.38/100
+推荐理由：符合通勤、主动降噪和轻便需求。
 ```
 
 ## 🎯 项目亮点
@@ -285,7 +368,7 @@ and noise cancellation is important.
 
 ## 📄 许可证
 
-MIT License
+待补充独立许可证文件。
 
 ## 👤 作者
 
